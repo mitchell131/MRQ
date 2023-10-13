@@ -1,0 +1,30 @@
+nav {
+  background-color: var(--colorDark);
+  border-radius: 4px;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  li {
+    margin: 11px;
+    display: inline;
+    overflow: visible; 
+    a {
+      color: var(--colorWhite);
+      text-decoration: none;
+
+      &.active { 
+        border-radius: 5px;
+        display: inline-block;
+        vertical-align: middle;
+        color: var(--colorDark);
+        background-color: var(--colorPrimary);
+        margin: -6px 0;
+        padding:  calc(0.2rem + 2px) 10px
+      }
+    }
+  }
+}

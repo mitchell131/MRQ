@@ -1,0 +1,24 @@
+.priceChart {
+  height: 300px;
+  display: flex;
+  position: relative;
+
+  &__info {
+    font-size:8vw;
+    opacity: 0.3;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+@media (max-width: 1023px) {
+  .priceChart {
+    max-height: 250px;
+    height: 180px;
+    width: 100%;
+  }
+ }
+}

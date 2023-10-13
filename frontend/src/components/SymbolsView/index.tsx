@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './symbolsView.css';
+import './symbolsView.scss';
 import SymbolsGrid from '../SymbolsGrid';
 import PriceChart from '@/components/PriceChart/PriceChart';
 
