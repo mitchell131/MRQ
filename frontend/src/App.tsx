@@ -1,6 +1,9 @@
 import './App.css';
 import Navbar from '@/components/Navbar';
 import Router from '@/router';
+import { registerEpics } from './store';
+
+registerEpics();
 
 function App() {
   return (

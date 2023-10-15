@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '@/store/index';
 
 type historyEntry = {
   time: number;
@@ -11,7 +10,7 @@ type PriceHistoryResponse = {
   history: historyEntry[];
 };
 
-type PriceHistoryState = {
+export type PriceHistoryState = {
   symbol: string | null;
   history: historyEntry[];
   apiState: {
@@ -41,10 +40,6 @@ export const fetchPriceHistory = createAsyncThunk(
   }
 );
 
-const selectSymbolInfo = (state: RootState) => state.priceHistory.symbol;
-const selectPriceHistory = (state: RootState) => state.priceHistory.history;
-const apiState = (state: RootState) => state.priceHistory.apiState;
-
 const priceHistorySlice = createSlice({
   name: 'priceHistory',
   initialState,
@@ -72,11 +67,4 @@ const priceHistorySlice = createSlice({
   }
 });
 
-const selectors = {
-  selectPriceHistory,
-  selectSymbolInfo,
-  apiState
-};
-
 export default priceHistorySlice;
-export { selectors };

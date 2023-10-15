@@ -14,7 +14,11 @@ type StockEntry = {
   [key: string]: Stock;
 };
 
-type StocksState = {
+export interface IStocksSlice {
+  stock : StocksState
+};
+
+export type StocksState = {
   entities: StockEntry;
   ids: string[];
   apiState: {
@@ -40,10 +44,6 @@ export const fetchAllStocks = createAsyncThunk(
     return (await response.json()) as Stock[];
   }
 );
-
-const selectStockIds = (state: RootState) => state.stocks.ids;
-const selectStocks = (state: RootState) => state.stocks.entities;
-const apiState = (state: RootState) => state.stocks.apiState;
 
 const stocksSlice = createSlice({
   name: 'stocks',
@@ -75,12 +75,6 @@ const stocksSlice = createSlice({
     });
   }
 });
-
-const selectors = {
-  selectStockIds,
-  selectStocks,
-  apiState
-};
 
 export default stocksSlice;
 export { selectors };
