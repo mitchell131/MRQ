@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import pricesSlice from './pricesSlice';
 import stocksSlice from '@/store/stocksSlice';
 import priceHistorySlice from '@/store/priceHistorySlice';
-import stockChartSlice from './stockChart';
+import stockChartSlice from './stockChartSlice';
 
 export const DUMMY_ACTION = { type: 'TYPE' };
 

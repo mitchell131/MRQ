@@ -14,13 +14,11 @@ const stockChartSlice = createSlice({
   initialState,
   reducers: {
     updateSelectedId: (state, action: PayloadAction<string>) => {
-      console.log('[updateSelectedId]', action.payload)
       state.id = action.payload;
     }
   }
 });
 
 export const { updateSelectedId } = stockChartSlice.actions;
-
 
 export default stockChartSlice;

@@ -1,24 +1,14 @@
-import { useEffect } from 'react';
 import './priceChart.scss';
 import { Line, LineChart, XAxis, YAxis, ResponsiveContainer } from 'recharts';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { fetchPriceHistory } from '@/store/priceHistorySlice';
+import { useAppSelector } from '@/hooks/redux';
 import { selectPriceHistory, selectSymbolInfo } from '@/store/selectors';
-type PriceChartProps = {
-  // symbolId: string | null;
-};
+
 const PriceChart = () => {
 
-  // TODO - This should be in an epic and we call fetchPriceHistory from within that layer not in here
-  // const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   if (symbolId !== null) {
-  //     dispatch(fetchPriceHistory(symbolId));
-  //   }
-  // }, [dispatch, symbolId]);
-
-  const data = useAppSelector(selectPriceHistory);
   const symbolInfo = useAppSelector(selectSymbolInfo);
+  // Timestamp changes everytime here so we cannot prevent re-rendering on same symbol click
+  const data = useAppSelector(selectPriceHistory);
+
   return (
     <div className="priceChart">
       <div className="priceChart__info">{symbolInfo}</div>

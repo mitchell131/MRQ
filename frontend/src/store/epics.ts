@@ -1,13 +1,13 @@
 import { Observable } from 'rxjs';
 import { Action } from '@reduxjs/toolkit';
 import { filter, map } from 'rxjs/operators';
-import { updateSelectedId } from './stockChart';
+import { updateSelectedId } from './stockChartSlice';
 import { fetchPriceHistory } from './priceHistorySlice';
 
 
 /**
- * Updates the side bets visible and save state in user preferences
- * @method handleVisibleSideBets
+ * Reacts to stock chart selected and fires action to fetch chart history
+ * @method handleFetchChart
  * @category epics
  */
 
@@ -15,8 +15,6 @@ import { fetchPriceHistory } from './priceHistorySlice';
  action$.pipe(
    filter( updateSelectedId.match ),
    map( ( { payload } ) => {
-    console.log('[updateSelectedId] - epic')
-
     return  fetchPriceHistory( payload )
    }
    )

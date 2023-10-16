@@ -1,38 +1,55 @@
-import { useCallback } from 'react';
 import './symbolCard.scss';
+import React, { useState } from 'react';
+import { updateSelectedId } from '@/store/stockChartSlice';
+import { selectChartSelectedId, selectPriceById } from '@/store/reselectors';
 import { ReactComponent as IndustryLogo } from '@/assets/industry.svg';
 import { ReactComponent as CompanyIcon } from '@/assets/company.svg';
 import { ReactComponent as MarketCapIcon } from '@/assets/market_cap.svg';
-import { formatAmount } from '../../utils/money.util'
+import { formatAmount, getPriceDropInPerc } from '../../utils/money.util'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { STOCK_ICONS_MAP } from '../SymbolsGrid/definitions';
-import { updateSelectedId } from '@/store/stockChart';
+import { selectStocks } from '@/store/selectors';
+import Price from '../Price/Price';
+import { usePrevious } from '@/hooks/usePrevious';
+import classnames from 'classnames';
 
 type SymbolCardProps = {
   id: string;
-  price: number;
 };
 
-const SymbolCard = ({ id, price }: SymbolCardProps) => {
-  const { trend, industry, companyName, marketCap } = useAppSelector(
-    (state) => state.stocks.entities[id]
-  );
+const SymbolCard = ({ id }: SymbolCardProps) => {
+  const { trend, industry, companyName, marketCap } = useAppSelector(selectStocks)[id];
 
   const dispatch = useAppDispatch();
 
-
-  // TODO Intorduce typeng here
+  const price = useAppSelector(selectPriceById(id));
+  // TODO Intorduce typing here
   const formattedMoney = formatAmount( price,  { noDecimal: true }  );
 
-  // TODO Intorduce typeng here
+  const prevPrice = usePrevious( price ) || 0;
+  // Did price change boolean
+  // const priceChanged =  !!prevPrice && ( prevPrice !== price );
+
+  // TODO Intorduce typeng heres
   const imgSrc = trend !== null ?  STOCK_ICONS_MAP[trend] : ''
 
+  const isSelected = useAppSelector(selectChartSelectedId(id))
+
   const handleOnClick = () => {
-    dispatch(updateSelectedId(id))
+    console.log(isSelected)
+    dispatch(updateSelectedId(!isSelected ? id: 'fassske'))
   }
 
+ // Can use same func for all case. If pos show green, If neg show red
+  const classNamea = classnames( 'symbolCard', {
+    'symbolCard__selected': isSelected,
+    'symbolCard__shake': getPriceDropInPerc(price, prevPrice) > 25,
+    'symbolCard__positive': getPriceDropInPerc(price, prevPrice) < 0,
+    'symbolCard__negative': getPriceDropInPerc(price, prevPrice) > 0,
+  })
+
   return (
-    <div onClick={handleOnClick} className="symbolCard">
+    <div onClick={handleOnClick} className={classNamea}>
       <div className='symbolCard__header'>
         <span>{id}</span>
         <img className='symbolCard__header--img' src={imgSrc || ''} />
@@ -54,4 +71,5 @@ const SymbolCard = ({ id, price }: SymbolCardProps) => {
     </div>
   );
 };
+
 export default SymbolCard;

@@ -77,4 +77,3 @@ const stocksSlice = createSlice({
 });
 
 export default stocksSlice;
-export { selectors };

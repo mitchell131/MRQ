@@ -23,3 +23,15 @@ export const formatAmount = ( amount: number, options?: Pick<IFormatMoneyOptions
   const moneyWithCurrency = `${currency}${formatMoney}`
   return moneyWithCurrency || 0;
 };
+
+/**
+ * Formats money to a fixed number
+ * @method getPriceDrop
+ * @category utils
+ * @returns {number} Formatted money
+ */
+export const getPriceDropInPerc = (currentPrice: number, previousPrice: number): number => {
+   const currentPercent =  currentPrice * 100 / previousPrice;
+   return 100 - currentPercent;
+}
+
