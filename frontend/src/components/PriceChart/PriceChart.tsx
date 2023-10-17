@@ -1,15 +1,17 @@
 import './priceChart.scss';
 import { Line, LineChart, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { useAppSelector } from '@/hooks/redux';
-import { selectPriceHistory, selectSymbolInfo } from '@/store/selectors';
+import { selectChartIsLoading, selectPriceHistory, selectSymbolInfo } from '@/store/selectors';
+import LoadingSpinner from '../LoadingSpinner/loadingSpinner';
 
 const PriceChart = () => {
 
+  const isLoading = useAppSelector(selectChartIsLoading)
   const symbolInfo = useAppSelector(selectSymbolInfo);
   // Timestamp changes everytime here so we cannot prevent re-rendering on same symbol click
   const data = useAppSelector(selectPriceHistory);
 
-  return (
+  const renderChart = (
     <div className="priceChart">
       <div className="priceChart__info">{symbolInfo}</div>
       <ResponsiveContainer width="100%" height="100%">
@@ -20,6 +22,10 @@ const PriceChart = () => {
         </LineChart>
       </ResponsiveContainer>
     </div>
+  )
+
+  return (
+    <>{isLoading ? <LoadingSpinner /> : renderChart}</>
   );
 };
 

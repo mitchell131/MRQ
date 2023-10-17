@@ -5,14 +5,14 @@ import { fetchAllStocks } from './store/stocksSlice';
 import Navbar from '@/components/Navbar';
 import Router from '@/router';
 
-registerEpics();          
+registerEpics();
 
 function App() {
 
   // Just one time on load for init data. no need of use effect
   const dispatch = useAppDispatch();
   dispatch(fetchAllStocks());
-      
+
   return (
     <div className="App">
       <h2>STONKS</h2>

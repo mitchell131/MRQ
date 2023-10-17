@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type historyEntry = {
   time: number;
@@ -24,24 +24,28 @@ const initialState: PriceHistoryState = {
   history: [],
   apiState: {
     loading: null,
-    error: false
-  }
+    error: false,
+  },
 };
 
 export const fetchPriceHistory = createAsyncThunk(
-  'stocks/fetchPriceHistory',
+  "stocks/fetchPriceHistory",
   // if you type your function argument here
   async (symbolId: string, thunkAPI) => {
-    const response = await fetch(`http://localhost:3100/api/stock/history/${symbolId}`, {
-      signal: thunkAPI.signal
-    });
+    const response = await fetch(
+      `http://localhost:3100/api/stock/history/${symbolId}`,
+      {
+        signal: thunkAPI.signal,
+      }
+    );
     // await delayPromise(1000);
     return (await response.json()) as PriceHistoryResponse;
   }
 );
+export const clearChartHistory = createAction("REVERT_ALL");
 
 const priceHistorySlice = createSlice({
-  name: 'priceHistory',
+  name: "priceHistory",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -64,7 +68,8 @@ const priceHistorySlice = createSlice({
       state.apiState.error = false;
       state.apiState.loading = true;
     });
-  }
+    builder.addCase(clearChartHistory, () => initialState);
+  },
 });
 
 export default priceHistorySlice;

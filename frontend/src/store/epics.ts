@@ -1,9 +1,8 @@
-import { Observable } from 'rxjs';
-import { Action } from '@reduxjs/toolkit';
-import { filter, map } from 'rxjs/operators';
-import { updateSelectedId } from './stockChartSlice';
-import { fetchPriceHistory } from './priceHistorySlice';
-
+import { Observable, of } from "rxjs";
+import { Action } from "@reduxjs/toolkit";
+import { filter, mergeMap } from "rxjs/operators";
+import { updateSelectedId } from "./stockChartSlice";
+import { clearChartHistory, fetchPriceHistory } from "./priceHistorySlice";
 
 /**
  * Reacts to stock chart selected and fires action to fetch chart history
@@ -11,11 +10,12 @@ import { fetchPriceHistory } from './priceHistorySlice';
  * @category epics
  */
 
- export const handleFetchChart = ( action$: Observable<Action> ) =>
- action$.pipe(
-   filter( updateSelectedId.match ),
-   map( ( { payload } ) => {
-    return  fetchPriceHistory( payload )
-   }
-   )
- );
+export const handleFetchChart = (action$: Observable<Action>) =>
+  action$.pipe(
+    filter(updateSelectedId.match),
+    mergeMap(({ payload }) => {
+      return payload !== ""
+        ? of(fetchPriceHistory(payload))
+        : of(clearChartHistory());
+    })
+  );

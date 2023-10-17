@@ -5,25 +5,25 @@ const Navbar = () => {
     <nav>
       <ul>
         <li>
-            <NavLink 
-              className={({ isActive, isPending }) =>
+          <NavLink
+            className={({ isActive, isPending }) =>
               isPending ? "pending" : isActive ? "active" : ""
             }
             to="/"><span>Dashboard</span></NavLink>
         </li>
         <li>
-          <NavLink 
-             className={({ isActive, isPending }) =>
-             isPending ? "pending" : isActive ? "active" : ""
-           }
-          to="/profile">Profile</NavLink>
+          <NavLink
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "active" : ""
+            }
+            to="/profile">Profile</NavLink>
         </li>
         <li>
           <NavLink
-             className={({ isActive, isPending }) =>
-             isPending ? "pending" : isActive ? "active" : ""
-           }
-          to="/statements">Statements</NavLink>
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "active" : ""
+            }
+            to="/statements">Statements</NavLink>
         </li>
       </ul>
     </nav>
