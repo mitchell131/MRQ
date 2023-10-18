@@ -26,7 +26,10 @@ export const formatAmount = (
   if (!showDash && formatMoney < 0) {
     formatMoney = Math.abs(formatMoney);
   }
-  const moneyWithCurrency = `${currency}${formatMoney}`;
+
+  const converted =  Intl.NumberFormat('en', {notation: "compact"}).format(formatMoney)
+
+  const moneyWithCurrency = `${currency}${converted}`;
   return moneyWithCurrency || "0";
 };
 

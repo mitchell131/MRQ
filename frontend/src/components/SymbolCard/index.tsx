@@ -24,7 +24,9 @@ const SymbolCard = ({ id }: SymbolCardProps) => {
   const isSelected: boolean = useAppSelector(selectChartSelectedId(id))
   const price: number = useAppSelector(selectPriceById(id));
   // TODO Intorduce typing here
-  const formattedMoney: string = formatAmount(price, { noDecimal: true });
+  const formattedMoney: string = formatAmount(price | 0, { noDecimal: true });
+
+  const formattedMarketCap: string = formatAmount(marketCap, { noDecimal: true });
   // Get Previous So We Compare
   const prevPrice: number = usePrevious(price) || 0;
   // TODO Intorduce typing here
@@ -61,7 +63,7 @@ const SymbolCard = ({ id }: SymbolCardProps) => {
           <p>{formattedMoney}</p>
           <div>{companyName}</div>
           <div>{industry}</div>
-          <div>{marketCap}</div>
+          <div>{formattedMarketCap}</div>
         </div>
       </div>
     </div>
