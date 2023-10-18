@@ -27,7 +27,7 @@ export const formatAmount = (
     formatMoney = Math.abs(formatMoney);
   }
   const moneyWithCurrency = `${currency}${formatMoney}`;
-  return moneyWithCurrency || 0;
+  return moneyWithCurrency || "0";
 };
 
 /**

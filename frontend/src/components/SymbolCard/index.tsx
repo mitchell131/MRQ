@@ -21,20 +21,20 @@ const SymbolCard = ({ id }: SymbolCardProps) => {
 
   const dispatch = useAppDispatch();
 
-  const isSelected = useAppSelector(selectChartSelectedId(id))
-  const price = useAppSelector(selectPriceById(id));
+  const isSelected: boolean = useAppSelector(selectChartSelectedId(id))
+  const price: number = useAppSelector(selectPriceById(id));
   // TODO Intorduce typing here
-  const formattedMoney = formatAmount(price, { noDecimal: true });
+  const formattedMoney: string = formatAmount(price, { noDecimal: true });
   // Get Previous So We Compare
-  const prevPrice = usePrevious(price) || 0;
-  // TODO Intorduce typeng heres
-  const imgSrc = trend !== null ? STOCK_ICONS_MAP[trend] : ''
+  const prevPrice: number = usePrevious(price) || 0;
+  // TODO Intorduce typing here
+  const imgSrc: string | undefined = trend !== null ? STOCK_ICONS_MAP[trend] : ''
 
   const handleOnClick = () => {
     dispatch(updateSelectedId(!isSelected ? id : ''))
   }
 
-  const priceDrop = getPriceDropInPerc(price, prevPrice)
+  const priceDrop: number = getPriceDropInPerc(price, prevPrice)
 
   // Can use same func for all case. If pos show green, If neg show red
   const classNamea = classnames('symbolCard', {

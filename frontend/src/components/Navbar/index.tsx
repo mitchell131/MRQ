@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import './navbar.scss';
+
 const Navbar = () => {
   return (
     <nav>
@@ -9,7 +10,7 @@ const Navbar = () => {
             className={({ isActive, isPending }) =>
               isPending ? "pending" : isActive ? "active" : ""
             }
-            to="/"><span>Dashboard</span></NavLink>
+            to="/">Dashboard</NavLink>
         </li>
         <li>
           <NavLink
