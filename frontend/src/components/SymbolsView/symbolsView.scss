@@ -1,3 +1,15 @@
-.symbolsView__chart {
-  padding: 12px;
+.symbolsView {  
+  &__chart {
+    padding: 12px;
+  }
+
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 67vh;
+    &::-webkit-scrollbar { 
+      display: none;  /* Safari and Chrome */
+   }
+  }
 }

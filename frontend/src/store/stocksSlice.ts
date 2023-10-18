@@ -1,20 +1,24 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '@/store/index';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "@/store/index";
 
 type Stock = {
   symbol: string;
   companyName: string;
   industry: string;
   marketCap: number;
-  exchange: 'NASDAQ' | 'NYSE';
-  trend: 'UP' | 'DOWN' | null;
+  exchange: "NASDAQ" | "NYSE";
+  trend: "UP" | "DOWN" | null;
 };
 
 type StockEntry = {
   [key: string]: Stock;
 };
 
-type StocksState = {
+export interface IStocksSlice {
+  stock: StocksState;
+}
+
+export type StocksState = {
   entities: StockEntry;
   ids: string[];
   apiState: {
@@ -28,12 +32,12 @@ const initialState: StocksState = {
   ids: [],
   apiState: {
     loading: null,
-    error: false
-  }
+    error: false,
+  },
 };
 
 export const fetchAllStocks = createAsyncThunk(
-  'stocks/fetchAllStocks',
+  "stocks/fetchAllStocks",
   // if you type your function argument here
   async () => {
     const response = await fetch(`http://localhost:3100/api/stocks`);
@@ -41,12 +45,8 @@ export const fetchAllStocks = createAsyncThunk(
   }
 );
 
-const selectStockIds = (state: RootState) => state.stocks.ids;
-const selectStocks = (state: RootState) => state.stocks.entities;
-const apiState = (state: RootState) => state.stocks.apiState;
-
 const stocksSlice = createSlice({
-  name: 'stocks',
+  name: "stocks",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -73,14 +73,7 @@ const stocksSlice = createSlice({
       state.apiState.error = false;
       state.apiState.loading = true;
     });
-  }
+  },
 });
 
-const selectors = {
-  selectStockIds,
-  selectStocks,
-  apiState
-};
-
 export default stocksSlice;
-export { selectors };

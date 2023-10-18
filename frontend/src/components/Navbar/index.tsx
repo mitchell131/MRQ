@@ -1,17 +1,30 @@
 import { NavLink } from 'react-router-dom';
-import './navbar.css';
+import './navbar.scss';
+
 const Navbar = () => {
   return (
     <nav>
       <ul>
         <li>
-          <NavLink to="/">Dashboard</NavLink>
+          <NavLink
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "active" : ""
+            }
+            to="/">Dashboard</NavLink>
         </li>
         <li>
-          <NavLink to="/profile">Profile</NavLink>
+          <NavLink
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "active" : ""
+            }
+            to="/profile">Profile</NavLink>
         </li>
         <li>
-          <NavLink to="/statements">Statements</NavLink>
+          <NavLink
+            className={({ isActive, isPending }) =>
+              isPending ? "pending" : isActive ? "active" : ""
+            }
+            to="/statements">Statements</NavLink>
         </li>
       </ul>
     </nav>

@@ -1,5 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '@/store/index';
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type historyEntry = {
   time: number;
@@ -11,7 +10,7 @@ type PriceHistoryResponse = {
   history: historyEntry[];
 };
 
-type PriceHistoryState = {
+export type PriceHistoryState = {
   symbol: string | null;
   history: historyEntry[];
   apiState: {
@@ -25,28 +24,28 @@ const initialState: PriceHistoryState = {
   history: [],
   apiState: {
     loading: null,
-    error: false
-  }
+    error: false,
+  },
 };
 
 export const fetchPriceHistory = createAsyncThunk(
-  'stocks/fetchPriceHistory',
+  "stocks/fetchPriceHistory",
   // if you type your function argument here
   async (symbolId: string, thunkAPI) => {
-    const response = await fetch(`http://localhost:3100/api/stock/history/${symbolId}`, {
-      signal: thunkAPI.signal
-    });
+    const response = await fetch(
+      `http://localhost:3100/api/stock/history/${symbolId}`,
+      {
+        signal: thunkAPI.signal,
+      }
+    );
     // await delayPromise(1000);
     return (await response.json()) as PriceHistoryResponse;
   }
 );
-
-const selectSymbolInfo = (state: RootState) => state.priceHistory.symbol;
-const selectPriceHistory = (state: RootState) => state.priceHistory.history;
-const apiState = (state: RootState) => state.priceHistory.apiState;
+export const clearChartHistory = createAction("REVERT_ALL");
 
 const priceHistorySlice = createSlice({
-  name: 'priceHistory',
+  name: "priceHistory",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -69,14 +68,8 @@ const priceHistorySlice = createSlice({
       state.apiState.error = false;
       state.apiState.loading = true;
     });
-  }
+    builder.addCase(clearChartHistory, () => initialState);
+  },
 });
 
-const selectors = {
-  selectPriceHistory,
-  selectSymbolInfo,
-  apiState
-};
-
 export default priceHistorySlice;
-export { selectors };
